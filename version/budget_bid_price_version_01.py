@@ -3,7 +3,7 @@
 # @Time: 2024/1/25 23:49
 # @Author: PlutoCtx
 # @Email: ctx195467@163.com
-# @File: ui_demo03.py
+# @File: budget_bid_price_version.py
 # @Software: PyCharm
 # @User: chent
 
@@ -89,6 +89,7 @@ def cal_PULP(
 
     return res_updated_price, finalNumber
 
+
 def pandas_series_to_list(series):
     return series.tolist()
 
@@ -98,11 +99,10 @@ def get_key_list(series):
     res_list = []
     count = 0
     for s in temp_list:
-        # res_list.append(chinese_to_pinyin(s))
         res_list.append('key' + str(count))
         count += 1
-        # print(chinese_to_pinyin(s))/
     return res_list
+
 
 def get_original_number_dict(key_l, original_number):
     res_dict = {}
@@ -129,7 +129,6 @@ def get_original_total_budget(original_unit_price, original_number):
 
     res_total = sum(total)
     return total, res_total
-
 
 
 def generate_flag_list(originalQuantity, actualQuantity):
@@ -242,6 +241,7 @@ def generate_final_budget_list(actualQuantity_list, updated_unit_price_list):
         final_budget_list.append(actualQuantity_list[i] * updated_unit_price_list[i])
     return final_budget_list
 
+
 def business_handle(path, max_increase, max_decrease):
     procurementContent, originalQuantity, originalUnitPrice, actualQuantity = get_excel_data(path)
 
@@ -283,7 +283,7 @@ def fileopen():
     file_sql = askopenfilename()  # 打开文件对话框，获取选择的文件路径
     if file_sql:  # 如果选择了文件路径
         file_path_var.set(file_sql)  # 将文件路径设置到字符串变量v1中
-        print(f"选择了总文件：{file_sql}")  # 在控制台打印被选择文件的路径
+        print(f"选择了文件：{file_sql}")  # 在控制台打印被选择文件的路径
 
 
 # 定义运行函数，用于打印两个输入框的值（即被选择文件的路径）
@@ -294,9 +294,7 @@ def match():
 
     business_handle(file_path, max_increase_, max_decrease_)
 
-    print(file_path, type(file_path))
-    print(max_increase_, type(max_increase_))
-    print(max_decrease_, type(max_decrease_))
+
 
 def init_frame(frameT):
 
