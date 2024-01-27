@@ -6,11 +6,12 @@
 # @File: budget_bid_price_version.py
 # @Software: PyCharm
 # @User: chent
-
+import os
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 
 import pandas as pd
+import pulp
 import xlsxwriter as xw
 from pulp import *
 
@@ -46,28 +47,32 @@ def cal_PULP(
     :param original_total_budget:   原始预算总价
     :return:
     """
+    # print("************Solver List*********")
+    # for s in listSolvers(onlyAvailable=True):
+    #     print(s)
+    # print("*************Solver List*********")
     # 定义线性规划问题
     MyProblem = LpProblem("Budget_Bid_Price", sense=LpMaximize)
 
     # 设置每个变量的上下限
-    print('***************111*******************')
+    # print('***************111*******************')
     for i in range(len(key_list)):
         if flag_list[i] == 1:
             v = pulp.LpVariable(key_list[i], lowBound=original_price[i], upBound=original_price[i] * (1 + max_increase),
                                 cat='Continuous')
             MyProblem.addVariable(v)
-            print(v.name, v.upBound, v.lowBound, v)
+            # print(v.name, v.upBound, v.lowBound, v)
         elif flag_list[i] == 0:
             v = pulp.LpVariable(key_list[i], lowBound=original_price[i] * (1 - max_decrease),
                                 upBound=original_price[i] * (1 + max_increase), cat='Continuous')
             MyProblem.addVariable(v)
-            print(v.name, v.upBound, v.lowBound, v)
+            # print(v.name, v.upBound, v.lowBound, v)
         elif flag_list[i] == -1:
             v = pulp.LpVariable(key_list[i], lowBound=original_price[i] * (1 - max_decrease),
                                 upBound=original_price[i], cat='Continuous')
             MyProblem.addVariable(v)
-            print(v.name, v.upBound, v.lowBound, v)
-    print('*****************222*****************')
+            # print(v.name, v.upBound, v.lowBound, v)
+    # print('*****************222*****************')
 
     # 建立目标函数
     MyProblem += lpSum([actual_number_dict[v.name] * v for v in MyProblem.variables()]), 'TheFinalCost'
@@ -76,13 +81,16 @@ def cal_PULP(
     MyProblem += lpSum([original_number_dict[v.name] * v for v in MyProblem.variables()]) <= original_total_budget, 'ConstrainedRequirement'
 
     # 计算
-    MyProblem.solve()
+    currentPath = os.getcwd()
+    solverPath = os.path.join(currentPath, 'cbc.exe')
+    MyProblem.solve(COIN_CMD(path=solverPath))
+
     print("***************** Info *******************")
     print("Status:", LpStatus[MyProblem.status])
     res_updated_price = []
     for v in MyProblem.variables():
         res_updated_price.append(v.varValue)
-        print(v.name, "=", v.varValue)
+        # print(v.name, "=", v.varValue)
     print("最终总价最大值为：", pulp.value(MyProblem.objective))
     finalNumber = pulp.value(MyProblem.objective)
     MyProblem.writeLP('Budget Bid Price.lp')
