@@ -8,6 +8,7 @@
 # @User: chent
 
 import pulp
+
 def calculate_maximum_quote(max_increase, max_decrease):
     original_prices = [15, 20, 35, 75, 52]
     # 建立线性规划问题 BudgetBidPrice，目标是求解最大值
@@ -35,36 +36,8 @@ def calculate_maximum_quote(max_increase, max_decrease):
         print(v.name, "=", v.varValue)
     print("最终总价最大值为：", pulp.value(MyProblem.objective))
     MyProblem.writeLP('Budget Bid Price.lp')
+
 if __name__ == '__main__':
     max_increase = 0.2
     max_decrease = 0.2
     calculate_maximum_quote(max_increase, max_decrease)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

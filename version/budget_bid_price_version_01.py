@@ -36,8 +36,6 @@ def get_excel_data(path):
     originalQuantity = excel_data.iloc[:, 1]
     originalUnitPrice = excel_data.iloc[:, 2]
     actualQuantity = excel_data.iloc[:, 4]
-    # print("procurementContent: " + str(len(procurementContent)))
-    # print(procurementContent)
     generate_key_list_by_length(len(excel_data))
 
     procurementContent_list = pandas_series_to_list(procurementContent)
@@ -51,11 +49,6 @@ def get_excel_data(path):
                             originalUnitPrice_list,
                             actualQuantity_list)
 
-    # for k in key_list:
-    #     print(procurementContent_dict[k], originalQuantity_dict[k], originalUnitPrice_dict[k], actualQuantity_dict[k])
-    # print(type(procurementContent_dict['key1']), type(originalQuantity_dict['key1']), type(originalUnitPrice_dict['key1']), type(actualQuantity_dict['key1']), )
-
-    # return procurementContent, originalQuantity, originalUnitPrice, actualQuantity
     return procurementContent_dict, originalQuantity_dict, originalUnitPrice_dict, actualQuantity_dict
 
 def generate_original_total_prices(originalQuantity_dict, originalUnitPrice_dict):
@@ -71,11 +64,8 @@ def generate_original_total_prices(originalQuantity_dict, originalUnitPrice_dict
         temp = originalQuantity_dict[k] * originalUnitPrice_dict[k]
         original_total_prices_dict[k] = temp
         original_total_price += temp
-        # print(k, original_total_prices[k], original_total_price)
-        # print(k, originalQuantity_dict[k], originalUnitPrice_dict[k], original_total_prices[k], original_total_price)
 
     return original_total_prices_dict, original_total_price
-
 
 def generate_four_base_dict(key_list,
                             procurementContent_list,
@@ -336,13 +326,10 @@ def business_handle(path, max_increase, max_decrease):
     original_total_prices_dict, original_total_price = generate_original_total_prices(
         originalQuantity_dict=originalQuantity_dict,
         originalUnitPrice_dict=originalUnitPrice_dict)
-    # print(original_total_price)
 
     up_and_down_flag_dict = generate_up_or_down_flag_dict(originalQuantity_dict=originalQuantity_dict,
                                                           actualQuantity_dict=actualQuantity_dict)
 
-    # max_increase = 0.2
-    # max_decrease = 0.2
     updated_price_dict, finalNumber = calculate_PULP(up_and_down_flag_dict,
                                                      originalQuantity_dict,
                                                      actualQuantity_dict,
@@ -361,22 +348,6 @@ def business_handle(path, max_increase, max_decrease):
                             final_budget_dict,
                             original_total_price,
                             finalNumber)
-
-
-
-    # for k in key_list:
-    #     print(k, procurementContent_dict[k], originalQuantity_dict[k], originalUnitPrice_dict[k],
-    #           original_total_prices_dict[k], actualQuantity_dict[k], updated_price_dict[k], final_budget_dict[k])
-    #
-    # print('final_budget = ', final_budget)
-
-    # print('******************************************************************')
-
-    # for k in key_list:
-    #     print(k, originalUnitPrice_dict[k], updated_price_dict[k])
-
-    # print(key_list)
-
 
 # 定义打开文件对话框的函数，并将选择的文件路径设置到字符串变量file_path_var中
 def fileopen():

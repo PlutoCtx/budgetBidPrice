@@ -20,5 +20,3 @@ print("Status:", pulp.LpStatus[MyProbLP.status])    # 输出求解状态
 for v in MyProbLP.variables():
     print(v.name, "=", v.varValue)  # 输出每个变量的最优值
 print("F(x) = ", pulp.value(MyProbLP.objective))  # 输出最优解的目标函数值
-
-# = 关注 Youcans，分享原创系列 https://blog.csdn.net/youcans =

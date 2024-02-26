@@ -97,45 +97,8 @@ if __name__ == '__main__':
     # 各个采购内容的原始总价，以及所有采购内容的总价
     originalTotalPrice, totalOriginalPrice = get_original_total_price(originalQuantity_value, originalUnitPrice_value)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     print('*********************************')
     print(originalQuantity_value)
     print(originalUnitPrice_value)
     print(originalTotalPrice)
     print(totalOriginalPrice)
-
-
-
-
-
-
-
-
-
-# b = np.mat([10, 20, 8, 7, 35])
-# c = np.mat([10, 20, 35, 75, 52]).T
-# print(b * c)
-
-
-
-
-
-

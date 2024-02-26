@@ -41,32 +41,6 @@ for v in prob.variables():
     print(v.name, "=", v.varValue)
 print("Objective=", value(prob.objective))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 定义问题
 prob = pulp.LpProblem("Maximize the sum of list2", pulp.LpMaximize)
 
